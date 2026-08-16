@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahal Mo Pa Ba?</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card">
+    <div class="heart">❤️</div>
+    <h1>Mahal mo pa ba?</h1>
+    <p>Choose your answer honestly...</p>
+
+    <div class="buttons">
+      <button id="yesBtn">YES 💗</button>
+      <button id="noBtn">NO 💔</button>
+    </div>
+  </div>
+
+  <div id="player" class="player hidden">
+    <div class="video-box">
+      <p id="message"></p>
+      <button id="openVideo">Open Video 🎵</button>
+    </div>
+  </div>
+
+  <script>
+    // TikTok links supplied in the request.
+    const yesVideo = "https://vt.tiktok.com/ZSVYYV7f8/";
+    const noVideo  = "https://vt.tiktok.com/ZSVYYn5Bb/";
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const player = document.getElementById("player");
+    const message = document.getElementById("message");
+    const openVideo = document.getElementById("openVideo");
+
+    let selectedVideo = "";
+
+    function chooseAnswer(answer) {
+      selectedVideo = answer === "yes" ? yesVideo : noVideo;
+      message.textContent = answer === "yes"
+        ? "You chose YES! ❤️"
+        : "You chose NO... 💔";
+      player.classList.remove("hidden");
+
+      // Open the TikTok link in a new tab.
+      window.open(selectedVideo, "_blank", "noopener,noreferrer");
+    }
+
+    yesBtn.addEventListener("click", () => chooseAnswer("yes"));
+    noBtn.addEventListener("click", () => chooseAnswer("no"));
+
+    openVideo.addEventListener("click", () => {
+      if (selectedVideo) {
+        window.open(selectedVideo, "_blank", "noopener,noreferrer");
+      }
+    });
+
+    // The NO button playfully moves around when the mouse gets close.
+    noBtn.addEventListener("mouseenter", () => {
+      const maxX = Math.max(20, window.innerWidth - noBtn.offsetWidth - 40);
+      const maxY = Math.max(20, window.innerHeight - noBtn.offsetHeight - 40);
+      noBtn.style.position = "fixed";
+      noBtn.style.left = Math.floor(Math.random() * maxX) + "px";
+      noBtn.style.top = Math.floor(Math.random() * maxY) + "px";
+    });
+  </script>
+</body>
+</html>
